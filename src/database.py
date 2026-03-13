@@ -7,6 +7,13 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+if DATABASE_URL.startswith("postgresql://"): #type: ignore
+    DATABASE_URL = DATABASE_URL.replace( #type: ignore
+        "postgresql://",
+        "postgresql+psycopg2://",
+        1
+    )
+
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set")
 
